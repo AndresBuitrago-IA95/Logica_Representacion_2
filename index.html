@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lógica y Representación II - 2026-1</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🐍 Lógica y Representación II</h1>
+            <p>Facultad de Ingeniería - 2026-1</p>
+        </div>
+    </header>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="nav-header">
+            <h2>Contenido</h2>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#" data-unit="listas">📋 Listas Ligadas</a></li>
+            <li><a href="#" data-unit="pilas-colas">📚 Pilas y Colas</a></li>
+            <li><a href="#" data-unit="analisis">📊 Análisis de Algoritmos</a></li>
+            <li><a href="#" data-unit="recursion">🔄 Recursión</a></li>
+            <li><a href="#" data-unit="arboles-grafos">🌳 Árboles y Grafos</a></li>
+            <li><a href="#" data-unit="dinamica">⚡ Programación Dinámica</a></li>
+            <li><a href="#" data-unit="np">🧩 NP Completitud</a></li>
+        </ul>
+    </nav>
+
+    <main class="content" id="content">
+        <div class="welcome">
+            <h2>Bienvenido al curso</h2>
+            <p>Selecciona una unidad del menú lateral para comenzar a estudiar.</p>
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>7</h3>
+                    <p>Unidades</p>
+                </div>
+                <div class="stat-card">
+                    <h3>5</h3>
+                    <p>Laboratorios</p>
+                </div>
+                <div class="stat-card">
+                    <h3>16</h3>
+                    <p>Semanas</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="lab-panel" id="labPanel">
+        <div class="lab-header">
+            <h3>💻 Laboratorio Interactivo</h3>
+            <button class="close-btn" id="closeLabBtn">✕</button>
+        </div>
+        <div class="lab-content">
+            <div class="code-editor">
+                <textarea id="codeEditor" placeholder="Escribe tu código Python aquí..."># Ejemplo: Lista simplemente ligada
+class Nodo:
+    def __init__(self, dato):
+        self.dato = dato
+        self.siguiente = None
+
+class ListaLigada:
+    def __init__(self):
+        self.cabeza = None
+    
+    def insertar(self, dato):
+        nuevo = Nodo(dato)
+        nuevo.siguiente = self.cabeza
+        self.cabeza = nuevo
+    
+    def mostrar(self):
+        actual = self.cabeza
+        elementos = []
+        while actual:
+            elementos.append(str(actual.dato))
+            actual = actual.siguiente
+        return " -> ".join(elementos)
+
+# Prueba
+lista = ListaLigada()
+lista.insertar(3)
+lista.insertar(2)
+lista.insertar(1)
+print(lista.mostrar())</textarea>
+            </div>
+            <div class="lab-controls">
+                <button id="runBtn" class="btn-primary">▶ Ejecutar</button>
+                <button id="clearBtn" class="btn-secondary">🗑 Limpiar</button>
+            </div>
+            <div class="output">
+                <h4>Salida:</h4>
+                <pre id="output"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script src="visualizations.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
