@@ -443,7 +443,7 @@ class OrdenamientoViz {
 }
 
 // Función auxiliar para crear contenedores de visualización
-function crearVisualizacion(tipo, titulo, containerId) {
+window.crearVisualizacion = function(tipo, titulo, containerId) {
     return `
         <div class="visualization-container" id="${containerId}">
             <h3>${titulo}</h3>

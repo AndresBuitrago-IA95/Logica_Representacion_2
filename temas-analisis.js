@@ -1,6 +1,8 @@
 // Temas de Análisis de Algoritmos
+// Usar var para compatibilidad
+var temasAnalisis = temasAnalisis || {};
 
-const temasAnalisis = {
+Object.assign(temasAnalisis, {
     'costo-computacional': {
         titulo: 'Costo Computacional Temporal y Espacial',
         teoria: `
@@ -192,12 +194,14 @@ print(f"Merge Sort (n={len(arr_test)}):")
 print(f"  Comparaciones: {comp}")
 print(f"  Espacio: O(n)")`
     },
-};
+});
 
-// Exportar
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = temasAnalisis;
+// Exportar para compatibilidad
+if (typeof window !== 'undefined') {
+    window.temasAnalisis = temasAnalisis;
 }
+
+console.log('✓ temas-analisis.js cargado:', Object.keys(temasAnalisis).length, 'temas');
 
     
     'notacion-asintotica': {

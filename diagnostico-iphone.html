@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico iPhone - Lógica y Representación II</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .success { border-left: 4px solid #00A859; }
+        .error { border-left: 4px solid #ff0000; }
+        .warning { border-left: 4px solid #ffa500; }
+        h1 { color: #00A859; }
+        pre {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Diagnóstico para iPhone</h1>
+    <div id="results"></div>
+
+    <script>
+        const results = document.getElementById('results');
+        
+        function addTest(title, status, message) {
+            const div = document.createElement('div');
+            div.className = `test ${status}`;
+            div.innerHTML = `
+                <h3>${status === 'success' ? '✅' : status === 'error' ? '❌' : '⚠️'} ${title}</h3>
+                <p>${message}</p>
+            `;
+            results.appendChild(div);
+        }
+
+        // Test 1: Información del dispositivo
+        addTest('Información del Dispositivo', 'success', `
+            <strong>User Agent:</strong><br>
+            <pre>${navigator.userAgent}</pre>
+            <strong>Plataforma:</strong> ${navigator.platform}<br>
+            <strong>Vendor:</strong> ${navigator.vendor}<br>
+            <strong>Ancho de pantalla:</strong> ${window.innerWidth}px<br>
+            <strong>Alto de pantalla:</strong> ${window.innerHeight}px
+        `);
+
+        // Test 2: Soporte de JavaScript
+        try {
+            const testObj = { a: 1, b: 2 };
+            Object.assign(testObj, { c: 3 });
+            addTest('Object.assign', 'success', 'Soportado correctamente');
+        } catch (e) {
+            addTest('Object.assign', 'error', `Error: ${e.message}`);
+        }
+
+        // Test 3: Const y Let
+        try {
+            const testConst = 'test';
+            let testLet = 'test';
+            addTest('const/let', 'success', 'Soportado correctamente');
+        } catch (e) {
+            addTest('const/let', 'error', `Error: ${e.message}`);
+        }
+
+        // Test 4: Arrow functions
+        try {
+            const testArrow = () => 'test';
+            testArrow();
+            addTest('Arrow Functions', 'success', 'Soportado correctamente');
+        } catch (e) {
+            addTest('Arrow Functions', 'error', `Error: ${e.message}`);
+        }
+
+        // Test 5: Template literals
+        try {
+            const test = `Template ${1 + 1}`;
+            addTest('Template Literals', 'success', 'Soportado correctamente');
+        } catch (e) {
+            addTest('Template Literals', 'error', `Error: ${e.message}`);
+        }
+
+        // Test 6: Fetch API
+        if (typeof fetch !== 'undefined') {
+            addTest('Fetch API', 'success', 'Disponible');
+        } else {
+            addTest('Fetch API', 'warning', 'No disponible');
+        }
+
+        // Test 7: LocalStorage
+        try {
+            localStorage.setItem('test', 'test');
+            localStorage.removeItem('test');
+            addTest('LocalStorage', 'success', 'Funcional');
+        } catch (e) {
+            addTest('LocalStorage', 'error', `Error: ${e.message}`);
+        }
+
+        // Test 8: Console
+        if (typeof console !== 'undefined' && typeof console.log === 'function') {
+            addTest('Console', 'success', 'Disponible');
+        } else {
+            addTest('Console', 'error', 'No disponible');
+        }
+
+        // Test 9: Cargar scripts externos
+        const testScripts = [
+            'temas-detallados.js',
+            'temas-pilas-colas.js',
+            'temas-analisis.js',
+            'generar-temas-completos.js'
+        ];
+
+        let scriptsLoaded = 0;
+        let scriptsTotal = testScripts.length;
+
+        testScripts.forEach(src => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = () => {
+                scriptsLoaded++;
+                addTest(`Script: ${src}`, 'success', 'Cargado correctamente');
+                
+                if (scriptsLoaded === scriptsTotal) {
+                    // Verificar variables globales
+                    setTimeout(() => {
+                        if (typeof temasDetallados !== 'undefined') {
+                            addTest('temasDetallados', 'success', `${Object.keys(temasDetallados).length} temas cargados`);
+                        } else {
+                            addTest('temasDetallados', 'error', 'Variable no definida');
+                        }
+
+                        if (typeof temasPilasColas !== 'undefined') {
+                            addTest('temasPilasColas', 'success', `${Object.keys(temasPilasColas).length} temas cargados`);
+                        } else {
+                            addTest('temasPilasColas', 'error', 'Variable no definida');
+                        }
+
+                        if (typeof temasAnalisis !== 'undefined') {
+                            addTest('temasAnalisis', 'success', `${Object.keys(temasAnalisis).length} temas cargados`);
+                        } else {
+                            addTest('temasAnalisis', 'error', 'Variable no definida');
+                        }
+
+                        if (typeof todosLosTemas !== 'undefined') {
+                            addTest('todosLosTemas', 'success', `${Object.keys(todosLosTemas).length} temas cargados`);
+                        } else {
+                            addTest('todosLosTemas', 'error', 'Variable no definida');
+                        }
+                    }, 500);
+                }
+            };
+            script.onerror = () => {
+                addTest(`Script: ${src}`, 'error', 'Error al cargar');
+            };
+            document.head.appendChild(script);
+        });
+
+        // Test 10: Eventos táctiles
+        if ('ontouchstart' in window) {
+            addTest('Eventos Táctiles', 'success', 'Soportados');
+        } else {
+            addTest('Eventos Táctiles', 'warning', 'No soportados (puede ser desktop)');
+        }
+    </script>
+</body>
+</html>

@@ -1,6 +1,8 @@
 // Temas de Pilas y Colas (continuación)
+// Usar var para compatibilidad
+var temasPilasColas = temasPilasColas || {};
 
-const temasPilasColas = {
+Object.assign(temasPilasColas, {
     'n-pilas': {
         titulo: 'N-Pilas en un Arreglo',
         teoria: `
@@ -922,4 +924,11 @@ tres_colas.dequeue(0)
 tres_colas.dequeue(1)
 tres_colas.dequeue(2)`
     }
-};
+});
+
+// Exportar para compatibilidad
+if (typeof window !== 'undefined') {
+    window.temasPilasColas = temasPilasColas;
+}
+
+console.log('✓ temas-pilas-colas.js cargado:', Object.keys(temasPilasColas).length, 'temas');

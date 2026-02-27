@@ -107,8 +107,13 @@ const estructuraCurso = {
 };
 
 // Generar menú de navegación
-function generarMenu() {
+window.generarMenu = function() {
     const navMenu = document.getElementById('navMenu');
+    if (!navMenu) {
+        console.error('❌ Elemento navMenu no encontrado');
+        return;
+    }
+    
     navMenu.innerHTML = '';
     
     Object.keys(estructuraCurso).forEach(unidadKey => {
@@ -175,7 +180,7 @@ function toggleSubtemas(li) {
 }
 
 // Cargar tema individual
-function cargarTema(temaId) {
+window.cargarTema = function(temaId) {
     const tema = temasDetallados[temaId];
     if (!tema) {
         console.error('Tema no encontrado:', temaId);
@@ -241,7 +246,7 @@ function cargarTema(temaId) {
 }
 
 // Cargar código del tema en el laboratorio
-function cargarCodigoTema(temaId) {
+window.cargarCodigoTema = function(temaId) {
     const tema = temasDetallados[temaId];
     if (tema && tema.codigo) {
         const codeEditor = document.getElementById('codeEditor');
@@ -252,7 +257,7 @@ function cargarCodigoTema(temaId) {
 }
 
 // Inicializar visualización específica del tema
-function inicializarVisualizacionTema(temaId) {
+window.inicializarVisualizacionTema = function(temaId) {
     const container = document.getElementById(`viz-${temaId}`);
     if (!container) return;
     
@@ -351,19 +356,6 @@ function esMobile() {
     return window.innerWidth <= 768;
 }
 
-// Mostrar/ocultar botón hamburguesa según tamaño de pantalla
-function actualizarMenuToggle() {
-    const menuToggle = document.getElementById('menuToggle');
-    if (esMobile()) {
-        menuToggle.style.display = 'block';
-    } else {
-        menuToggle.style.display = 'none';
-        // Asegurar que el sidebar esté visible en desktop
-        document.getElementById('sidebar').classList.remove('active');
-        document.getElementById('overlay').classList.remove('active');
-    }
-}
-
 // Toggle del menú móvil
 document.getElementById('menuToggle')?.addEventListener('click', () => {
     const sidebar = document.getElementById('sidebar');
@@ -388,25 +380,30 @@ const cerrarMenuMobile = () => {
 };
 
 // Modificar la función cargarTema para cerrar menú en móvil
-const cargarTemaOriginal = cargarTema;
-cargarTema = function(temaId) {
+const cargarTemaOriginal = window.cargarTema;
+window.cargarTema = function(temaId) {
     cargarTemaOriginal(temaId);
     cerrarMenuMobile();
 };
 
 // Modificar la función cargarUnidad para cerrar menú en móvil
-const cargarUnidadOriginal = cargarUnidad;
-cargarUnidad = function(unidadKey) {
+const cargarUnidadOriginal = window.cargarUnidad;
+window.cargarUnidad = function(unidadKey) {
     cargarUnidadOriginal(unidadKey);
     cerrarMenuMobile();
 };
 
-// Actualizar al cambiar tamaño de ventana
-window.addEventListener('resize', actualizarMenuToggle);
+// Actualizar al cambiar tamaño de ventana para cerrar menú si se agranda
+window.addEventListener('resize', () => {
+    if (!esMobile()) {
+        // Cerrar menú en desktop
+        document.getElementById('sidebar').classList.remove('active');
+        document.getElementById('overlay').classList.remove('active');
+    }
+});
 
 // Inicializar al cargar
 window.addEventListener('DOMContentLoaded', () => {
-    actualizarMenuToggle();
     
     // Prevenir zoom en inputs en iOS
     if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {

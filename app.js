@@ -1265,7 +1265,7 @@ print(f"\\n¿Se puede particionar {conjunto}? {puede_particionar(conjunto)}")`
 };
 
 // Función para cargar contenido de unidad
-function cargarUnidad(unidadKey) {
+window.cargarUnidad = function(unidadKey) {
     const unidad = unidades[unidadKey];
     const content = document.getElementById('content');
     
@@ -1417,7 +1417,7 @@ function inicializarVisualizacion(unidadKey) {
 }
 
 // Función para cargar ejemplo en el laboratorio
-function cargarEjemplo(unidadKey, ejemploIndex) {
+window.cargarEjemplo = function(unidadKey, ejemploIndex) {
     const ejemplo = unidades[unidadKey].ejemplos[ejemploIndex];
     const codeEditor = document.getElementById('codeEditor');
     const labPanel = document.getElementById('labPanel');

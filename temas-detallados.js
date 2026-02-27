@@ -1,5 +1,9 @@
 // Contenido detallado para cada tema individual
-const temasDetallados = {
+// Usar var para compatibilidad con Safari/iPhone
+var temasDetallados = temasDetallados || {};
+
+// Agregar temas
+Object.assign(temasDetallados, {
     // LISTAS LIGADAS - Temas individuales
     'lista-simple': {
         titulo: 'Lista Simplemente Ligada',
@@ -1111,8 +1115,13 @@ print("\\n=== Invertir Cadena ===")
 texto = "HOLA MUNDO"
 print(f"Original: {texto}")
 print(f"Invertida: {invertir_cadena(texto)}")`
-    },
-};
+    }
+});
 
-// Cerrar el objeto temasDetallados
+// Exportar para compatibilidad
+if (typeof window !== 'undefined') {
+    window.temasDetallados = temasDetallados;
+}
+
+console.log('✓ temas-detallados.js cargado:', Object.keys(temasDetallados).length, 'temas');
 console.log('Temas detallados cargados:', Object.keys(temasDetallados).length);

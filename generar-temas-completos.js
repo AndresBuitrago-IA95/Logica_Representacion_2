@@ -1,7 +1,9 @@
 // Script para generar todos los temas restantes de forma automática
 // Este archivo contiene TODOS los 60 temas del curso
+// Usar var para compatibilidad
+var todosLosTemas = todosLosTemas || {};
 
-const todosLosTemas = {
+Object.assign(todosLosTemas, {
     // LISTAS LIGADAS (Ya implementados en temas-detallados.js)
     
     // PILAS Y COLAS (Ya implementados en temas-pilas-colas.js)
@@ -240,9 +242,11 @@ print(fib_rapido(30))`
 print("MergeSort: Θ(n log n)")
 print("Búsqueda Binaria: Θ(log n)")`
     },
-};
+});
 
-// Exportar
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = todosLosTemas;
+// Exportar para compatibilidad
+if (typeof window !== 'undefined') {
+    window.todosLosTemas = todosLosTemas;
 }
+
+console.log('✓ generar-temas-completos.js cargado:', Object.keys(todosLosTemas).length, 'temas');
