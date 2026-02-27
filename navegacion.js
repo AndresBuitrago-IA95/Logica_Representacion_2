@@ -340,3 +340,116 @@ document.getElementById('copyBtn')?.addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', () => {
     generarMenu();
 });
+
+
+// ========================================
+// FUNCIONALIDAD RESPONSIVE PARA MÓVILES
+// ========================================
+
+// Detectar si es móvil
+function esMobile() {
+    return window.innerWidth <= 768;
+}
+
+// Mostrar/ocultar botón hamburguesa según tamaño de pantalla
+function actualizarMenuToggle() {
+    const menuToggle = document.getElementById('menuToggle');
+    if (esMobile()) {
+        menuToggle.style.display = 'block';
+    } else {
+        menuToggle.style.display = 'none';
+        // Asegurar que el sidebar esté visible en desktop
+        document.getElementById('sidebar').classList.remove('active');
+        document.getElementById('overlay').classList.remove('active');
+    }
+}
+
+// Toggle del menú móvil
+document.getElementById('menuToggle')?.addEventListener('click', () => {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
+});
+
+// Cerrar menú al hacer click en overlay
+document.getElementById('overlay')?.addEventListener('click', () => {
+    document.getElementById('sidebar').classList.remove('active');
+    document.getElementById('overlay').classList.remove('active');
+});
+
+// Cerrar menú al seleccionar un tema en móvil
+const cerrarMenuMobile = () => {
+    if (esMobile()) {
+        document.getElementById('sidebar').classList.remove('active');
+        document.getElementById('overlay').classList.remove('active');
+    }
+};
+
+// Modificar la función cargarTema para cerrar menú en móvil
+const cargarTemaOriginal = cargarTema;
+cargarTema = function(temaId) {
+    cargarTemaOriginal(temaId);
+    cerrarMenuMobile();
+};
+
+// Modificar la función cargarUnidad para cerrar menú en móvil
+const cargarUnidadOriginal = cargarUnidad;
+cargarUnidad = function(unidadKey) {
+    cargarUnidadOriginal(unidadKey);
+    cerrarMenuMobile();
+};
+
+// Actualizar al cambiar tamaño de ventana
+window.addEventListener('resize', actualizarMenuToggle);
+
+// Inicializar al cargar
+window.addEventListener('DOMContentLoaded', () => {
+    actualizarMenuToggle();
+    
+    // Prevenir zoom en inputs en iOS
+    if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.style.fontSize = '16px';
+        });
+    }
+});
+
+// Mejorar experiencia táctil
+if ('ontouchstart' in window) {
+    // Agregar clase para dispositivos táctiles
+    document.body.classList.add('touch-device');
+    
+    // Mejorar clicks en botones
+    document.addEventListener('touchstart', function() {}, {passive: true});
+}
+
+// Prevenir scroll del body cuando el menú está abierto
+const sidebar = document.getElementById('sidebar');
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+            if (sidebar.classList.contains('active') && esMobile()) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+    });
+});
+
+observer.observe(sidebar, { attributes: true });
+
+// Optimizar rendimiento en móviles
+if (esMobile()) {
+    // Reducir animaciones en móviles antiguos
+    const isOldMobile = /Android [1-4]|iPhone OS [1-9]/.test(navigator.userAgent);
+    if (isOldMobile) {
+        document.body.classList.add('reduce-animations');
+    }
+}
+
+console.log('🎨 Responsive design activado');
+console.log('📱 Modo:', esMobile() ? 'Móvil' : 'Desktop');

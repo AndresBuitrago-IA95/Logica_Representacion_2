@@ -2,11 +2,27 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#00A859">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Plataforma interactiva para Lógica y Representación II - Universidad de Antioquia">
     <title>Lógica y Representación II - 2026-1 | UdeA</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
     <style>
+        /* Estilos inline para carga rápida */
+        body { margin: 0; padding: 0; }
+        .loading { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            background: linear-gradient(135deg, #00A859 0%, #008045 100%);
+            color: white;
+            font-family: sans-serif;
+        }
+    </style>
         .subtemas-list {
             list-style: none;
             padding-left: 1.5rem;
@@ -101,6 +117,14 @@
         </div>
     </header>
 
+    <!-- Botón menú hamburguesa para móviles -->
+    <button class="menu-toggle" id="menuToggle" style="display: none;">
+        ☰
+    </button>
+
+    <!-- Overlay para cerrar menú en móvil -->
+    <div class="overlay" id="overlay"></div>
+
     <nav class="sidebar" id="sidebar">
         <div class="nav-header">
             <h2>Contenido</h2>
@@ -181,8 +205,24 @@ print(lista.mostrar())</textarea>
     </div>
 
     <script src="temas-detallados.js"></script>
+    <script src="temas-pilas-colas.js"></script>
+    <script src="temas-analisis.js"></script>
+    <script src="generar-temas-completos.js"></script>
     <script src="visualizations.js"></script>
     <script src="app.js"></script>
     <script src="navegacion.js"></script>
+    <script>
+        // Combinar todos los temas
+        if (typeof temasPilasColas !== 'undefined') {
+            Object.assign(temasDetallados, temasPilasColas);
+        }
+        if (typeof temasAnalisis !== 'undefined') {
+            Object.assign(temasDetallados, temasAnalisis);
+        }
+        if (typeof todosLosTemas !== 'undefined') {
+            Object.assign(temasDetallados, todosLosTemas);
+        }
+        console.log('Total de temas cargados:', Object.keys(temasDetallados).length);
+    </script>
 </body>
 </html>

@@ -293,18 +293,276 @@ header p {
     font-family: 'Courier New', monospace;
 }
 
+/* Responsive Design para Móviles */
 @media (max-width: 768px) {
-    .sidebar {
-        transform: translateX(-100%);
+    /* Header más compacto */
+    header h1 {
+        font-size: 1.5rem;
     }
     
+    header p {
+        font-size: 0.9rem;
+    }
+    
+    /* Sidebar como menú hamburguesa */
+    .sidebar {
+        position: fixed;
+        left: -280px;
+        top: 0;
+        height: 100vh;
+        z-index: 1000;
+        transition: left 0.3s ease;
+    }
+    
+    .sidebar.active {
+        left: 0;
+        box-shadow: 2px 0 20px rgba(0,0,0,0.3);
+    }
+    
+    /* Botón hamburguesa */
+    .menu-toggle {
+        display: block !important;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1001;
+        background: var(--udea-verde);
+        color: white;
+        border: none;
+        padding: 0.75rem;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    
+    /* Overlay para cerrar menú */
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+    }
+    
+    .overlay.active {
+        display: block;
+    }
+    
+    /* Contenido sin margen */
     .content {
         margin-left: 0;
+        padding: 1rem;
+        padding-top: 80px;
     }
     
+    /* Tarjetas más compactas */
+    .unit-content {
+        padding: 1rem;
+    }
+    
+    .welcome {
+        padding: 1.5rem;
+    }
+    
+    .stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .stat-card {
+        padding: 1.5rem;
+    }
+    
+    /* Tabs verticales en móvil */
+    .tabs {
+        flex-direction: column;
+        gap: 0.5rem;
+        border-bottom: none;
+    }
+    
+    .tab {
+        padding: 0.75rem 1rem;
+        border-left: 3px solid transparent;
+        border-bottom: none;
+        text-align: left;
+    }
+    
+    .tab.active {
+        border-left-color: var(--udea-verde);
+        border-bottom-color: transparent;
+    }
+    
+    /* Info cards más compactas */
+    .info-card {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+    
+    .info-card h4 {
+        font-size: 1rem;
+    }
+    
+    .info-card p, .info-card li {
+        font-size: 0.9rem;
+    }
+    
+    /* Example boxes */
+    .example-box {
+        padding: 1rem;
+    }
+    
+    /* Laboratorio panel full screen en móvil */
     .lab-panel {
         width: 100%;
         right: -100%;
+    }
+    
+    .lab-panel.active {
+        right: 0;
+    }
+    
+    .lab-content {
+        padding: 1rem;
+    }
+    
+    #codeEditor {
+        min-height: 200px;
+        font-size: 12px;
+    }
+    
+    .lab-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        padding: 0.75rem;
+    }
+    
+    /* Visualizaciones */
+    .visualization-container {
+        padding: 1rem;
+    }
+    
+    .viz-canvas {
+        padding: 1rem;
+        min-height: 150px;
+    }
+    
+    .viz-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .viz-btn, .viz-input {
+        width: 100%;
+    }
+    
+    .node {
+        width: 50px;
+        height: 50px;
+        font-size: 1rem;
+    }
+    
+    .arrow {
+        width: 30px;
+    }
+    
+    /* Topic list más compacta */
+    .topic-list li {
+        padding: 0.5rem 0;
+        font-size: 0.9rem;
+    }
+    
+    /* Navegación */
+    .nav-menu li a {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .subtemas-list li a {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .sidebar {
+        width: 240px;
+    }
+    
+    .content {
+        margin-left: 240px;
+    }
+    
+    .lab-panel {
+        width: 500px;
+    }
+    
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.2rem;
+    }
+    
+    header .container {
+        padding: 0 1rem;
+    }
+    
+    .content {
+        padding: 0.5rem;
+        padding-top: 70px;
+    }
+    
+    .unit-content h2 {
+        font-size: 1.5rem;
+    }
+    
+    .info-card h4 {
+        font-size: 0.95rem;
+    }
+    
+    .complexity-badge {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .btn-lab {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .node {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Landscape en móviles */
+@media (max-width: 768px) and (orientation: landscape) {
+    .content {
+        padding-top: 60px;
+    }
+    
+    .lab-panel {
+        height: 100vh;
+        overflow-y: auto;
+    }
+    
+    #codeEditor {
+        min-height: 150px;
     }
 }
 
@@ -566,4 +824,197 @@ header p {
     left: 0;
     color: var(--udea-verde);
     font-weight: bold;
+}
+
+
+/* ========================================
+   MEJORAS PARA DISPOSITIVOS TÁCTILES
+   ======================================== */
+
+/* Botón hamburguesa oculto por defecto */
+.menu-toggle {
+    display: none;
+}
+
+/* Áreas táctiles más grandes en móviles */
+.touch-device .nav-menu li a,
+.touch-device .btn-lab,
+.touch-device .viz-btn,
+.touch-device .tab {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+}
+
+/* Feedback visual mejorado para touch */
+.touch-device button:active,
+.touch-device .nav-menu li a:active {
+    transform: scale(0.98);
+    opacity: 0.8;
+}
+
+/* Reducir animaciones en dispositivos antiguos */
+.reduce-animations * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+}
+
+/* Mejorar legibilidad en pantallas pequeñas */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px;
+        -webkit-text-size-adjust: 100%;
+    }
+    
+    /* Evitar zoom en inputs en iOS */
+    input, textarea, select {
+        font-size: 16px !important;
+    }
+    
+    /* Mejorar contraste en móviles */
+    .info-card {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    
+    /* Espaciado mejorado para dedos */
+    .nav-menu li {
+        margin-bottom: 2px;
+    }
+    
+    /* Scroll suave */
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    /* Ocultar scrollbar en sidebar móvil */
+    .sidebar::-webkit-scrollbar {
+        width: 4px;
+    }
+    
+    .sidebar::-webkit-scrollbar-thumb {
+        background: var(--udea-verde);
+        border-radius: 2px;
+    }
+}
+
+/* Orientación horizontal en móviles */
+@media (max-width: 768px) and (orientation: landscape) {
+    .welcome h2 {
+        font-size: 1.5rem;
+    }
+    
+    .stats {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .stat-card h3 {
+        font-size: 1.5rem;
+    }
+}
+
+/* PWA - Ocultar elementos de navegador en modo standalone */
+@media (display-mode: standalone) {
+    header {
+        padding-top: env(safe-area-inset-top);
+    }
+    
+    .content {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* Dark mode support (opcional) */
+@media (prefers-color-scheme: dark) {
+    /* Mantener colores UdeA incluso en dark mode */
+    body {
+        background: linear-gradient(135deg, var(--udea-verde-oscuro) 0%, #004d2c 100%);
+    }
+}
+
+/* Accesibilidad - Reducir movimiento si el usuario lo prefiere */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Mejorar rendimiento en móviles */
+@media (max-width: 768px) {
+    /* Usar transform en lugar de left para animaciones más suaves */
+    .sidebar {
+        transform: translateX(-100%);
+        left: 0;
+        transition: transform 0.3s ease;
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    /* Optimizar rendering */
+    .node, .stack-item, .queue-item {
+        will-change: transform;
+    }
+    
+    /* Reducir sombras en móviles para mejor rendimiento */
+    .unit-content,
+    .welcome,
+    .info-card {
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+}
+
+/* Tablets en orientación portrait */
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
+    .sidebar {
+        width: 260px;
+    }
+    
+    .content {
+        margin-left: 260px;
+    }
+    
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Impresión (opcional) */
+@media print {
+    .sidebar,
+    .menu-toggle,
+    .overlay,
+    .lab-panel,
+    .viz-controls,
+    .btn-lab {
+        display: none !important;
+    }
+    
+    .content {
+        margin-left: 0;
+        padding: 0;
+    }
+    
+    .unit-content {
+        box-shadow: none;
+    }
+}
+
+/* Soporte para notch en iPhone X y superiores */
+@supports (padding: max(0px)) {
+    .menu-toggle {
+        top: max(20px, env(safe-area-inset-top));
+        left: max(20px, env(safe-area-inset-left));
+    }
+    
+    .sidebar {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
 }
